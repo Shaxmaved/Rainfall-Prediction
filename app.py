@@ -1,29 +1,21 @@
 import streamlit as st
-import numpy as np
 import joblib
+import sklearn
 
-# Load the trained model
-model = joblib.load("model.pkl")
+mymodel = joblib.load('model.pkl')
+st.title("Rain Fall Prediction")
 
-st.title("🌧️ Rainfall Prediction using Decision Tree")
-st.write("Enter weather parameters to predict whether it will rain or not.")
+a1 = st.number_input('enter pressure:')
+a2 = st.number_input('enter dewpoint:')
+a3 = st.number_input('enter humidity:')
+a4 = st.number_input('enter cloud:')
+a5 = st.number_input('enter sunshine:')
+a6 = st.number_input('enter wind direction:')
+a7 = st.number_input('enter wind speed:')
 
-# Input fields
-pressure = st.number_input("Pressure (hPa)", min_value=800.0, max_value=1100.0, value=1013.0)
-dewpoint = st.number_input("Dew Point (°C)", min_value=-20.0, max_value=40.0, value=12.0)
-humidity = st.slider("Humidity (%)", 0, 100, 70)
-cloud = st.slider("Cloud Cover (%)", 0, 100, 50)
-sunshine = st.number_input("Sunshine (hours)", min_value=0.0, max_value=12.0, value=6.0)
-winddirection = st.slider("Wind Direction (°)", 0, 360, 180)
-windspeed = st.number_input("Wind Speed (km/h)", min_value=0.0, max_value=100.0, value=10.0)
-
-# Prediction
-if st.button("Predict Rainfall"):
-    input_data = np.array([[pressure, dewpoint, humidity, cloud, sunshine, winddirection, windspeed]])
-    prediction = model.predict(input_data)
-
-    if prediction[0] == 1:
-        st.success("🌧️ Prediction: It will rain.")
+if st.button("predict"):
+    op = mymodel.predict([[a1,a2,a3,a4,a5,a6,a7]])
+    if op==1:
+        st.write('barish hogi')
     else:
-        st.info("☀️ Prediction: No rain expected.")
-    
+        st.write('barish nhi hogi')
